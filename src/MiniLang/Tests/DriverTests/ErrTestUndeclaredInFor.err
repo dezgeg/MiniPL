@@ -1,0 +1,4 @@
+Undeclared variable 'undeclared' at line 2, columns 4-13
+Undeclared variable 'bar' at line 4, columns 7-9
+
+2 errors in total.

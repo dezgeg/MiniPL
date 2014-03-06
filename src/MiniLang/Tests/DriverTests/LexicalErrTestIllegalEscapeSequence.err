@@ -1,0 +1,4 @@
+Unexpected token 'IllegalEscapeSequence' near '"\', expecting one of LeftParen, Identifier, IntLiteral, False, True, StringLiteral at line 1, columns 6-7
+Undeclared variable 'foo' at line 1, columns 23-25
+
+2 errors in total.

@@ -1,0 +1,4 @@
+Redeclaration of variable 'i' at line 2, columns 4-4
+Info: Variable 'i' already declared type 'Int' at line 1, columns 4-4
+
+1 errors in total.

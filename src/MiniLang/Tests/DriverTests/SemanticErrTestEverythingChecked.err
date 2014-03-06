@@ -1,0 +1,6 @@
+Both operands to operator 'Times' should have type 'Int', but are 'Int' and 'Bool' at line 2, columns 9-9
+Both operands to operator 'Plus' should have type 'Int', but are 'Bool' and 'String' at line 2, columns 26-26
+Both operands to operator 'Times' should have type 'Int', but are 'Int' and 'Bool' at line 3, columns 9-9
+Both operands to operator 'Plus' should have type 'Int', but are 'Bool' and 'String' at line 3, columns 26-26
+
+4 errors in total.

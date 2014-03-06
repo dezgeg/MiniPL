@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>MiniLang</title>
+		<style>
+			dt { font-weight: bold; }
+		</style>
+	</head>
+	<body>
+<h1>MiniLang: Compilers Spring 2012 - MiniPL interpreter - Tuomas Tynkkynen</h1>
+
+<h2>Introduction</h2>
+	MiniLang implements an interpreter for a superset of the <a href="http://www.cs.helsinki.fi/u/vihavain/k12/okk/project/miniplsyntax.html">MiniPL</a> programming language.
+	MiniLang supports the following additions to the MiniPL language:
+	<ul>
+		<li>The missing comparison operators '&lt;', '&lt;=', '&gt;=', '!=' and an unary '-' operator</li>
+		<li>Boolean literals 'true' and 'false'</li>
+		<li>Operator precedences according to the following table:
+			<table border="1">
+				<tr><th>Name</th><th>Operators</th><th>Associativity</th></tr>
+				<tr><td>Unary minus, Logical NOT</td><td>- !</td><td>Right</td></tr>
+				<tr><td>Multiplication, division</td><td>* /</td><td>Left</td></tr>
+				<tr><td>Addition, subtraction</td><td>+ -</td><td>Left</td></tr>
+				<tr><td>Comparison</td><td>&lt; &gt; &lt;= &gt;=</td><td>Nonassociative</td></tr>
+				<tr><td>Equality</td><td>= !=</td><td>Nonassociative</td></tr>
+				<tr><td>Logical AND</td><td>&amp;</td><td>Left</td></tr>
+			</table>
+		</li>
+	</ul>
+<h2>Usage</h2>
+	<h3>Building</h3>
+		Use Visual Studio to build the project. <font color="red">For some stupid reason, the unit tests don't seem to work if the project is on the Linux network share in department machines, see
+		<a href="http://social.msdn.microsoft.com/Forums/pl-PL/vsunittest/thread/e7c23909-b0b0-4d5a-b463-fceced8f5cd8">here</a>.</font>
+	<h3>Running</h3>
+		Run <code>MiniLang &lt;codefile.mpl&gt;</code> to execute a file,
+		or <code>MiniLang -e &lt;code&gt;</code> to evaluate code from the command line.
+		Make sure to quote the parameters properly, this depends on your shell.
+	<h3>Testing process</h3>
+	Majority of testing is done with Visual Studio unit tests, which are contained in the Tests subproject.
+	<h4>Code file test cases</h4>
+	The Tests\DriverTests folder contains some testcases as .mpl files, as well as files with .in, .out, and .err extensions.
+	The DriverTest test class executes each .mpl file, with the optional .in file as the standard input for the MiniPL program.
+	After executing, the standard output (where 'print' statements print) and standard error (where compile and runtime errors go) are compared with the .out and .err files.
+
+
+<h2>Token language</h2>
+<strong>Normal tokens</strong>: Note that Identifier will also match the reserved keywords.
+Type of those tokens will be later changed to the appropriate keyword.<br/>
+Keywords are the following: "var" | "for" | "end" | "in" | "do" | "read" | "print" | "int" | "string" | "bool" | "assert" | "true" | "false"<br/>
+Also, each of the operators has it's own token type, but they are not listed separately for conciseness.<br/>
+See the generated DFA for more detailed view.
+<img src="main.svg"/>
+<pre>
+CommentStart ::= /\*
+StringLiteral ::= "([^"\\]|\\[\\"n])*"
+IntLiteral ::= [0-9]+
+Identifier ::= [a-zA-Z_][a-zA-Z_0-9]*
+Operator ::= '+' | '-' | '*' | '/' | '&lt;' | '&lt;=' | '&gt;' | '&gt;=' | '!=' | '=' | '&amp;' | '!' | ':=' | ':' | '..' | '(' | ')'
+</pre>
+
+Also, there are <strong>Skip patterns</strong>, which are matched but ignored.
+The Newline token has special handling in the lexer: when it is found, the line counter is incremented.
+<pre>
+Newline ::= (//[^\n]\n) | ([ \t]*\n)
+Whitespace ::= [ \t\r]+
+CommentStart ::= /\*
+</pre>
+When a Comment token is found, the <strong>Comment state</strong> is entered, and only the following patterns are then considered.</br>
+Every CommentStart and CommentEnd token found in this state will respectively increment and decrement the comment nesting counter.
+When the counter reaches zero, the lexer enters its regular state again.<br/>
+Regular expressions for these are complicated, so see the generated DFA for details.
+<img src="comment.svg"/>
+<pre>
+CommentStart ::= anything that ends '/*', but does not contain a newline or '*/'
+CommentEnd ::= anything than ends in '*/', but does not contain a newline or '/*'
+Newline ::= anything than ends in a newline, but does not contain '*/' or '/*'
+</pre>
+<h2>LL(1)-parseable syntax</h2>
+<pre>
+program:		statements
+statements:		stmt ';' (stmt ';')* // NEED PREDICT(stmt)
+
+stmt:			"var" Identifier ':' type (':=' expr)?
+	|			"for" Identifier "in" expr ".." expr "do" stmts "end" "for"
+	|			"read" Identifier
+	|			"print" expr
+	|			"assert" expr
+	|			Identifier ':=' expr
+type:   "int"
+    |   "string"
+    |   "bool"
+expr: logical_expr
+
+logical_expr:	cmp_expr ('&amp;' cmp_expr)*
+
+cmp_expr:		rel_expr (cmpop rel_expr)*
+cmpop: '=' | '!='
+
+rel_expr:		term_expr (relop term_expr)*
+relop: '&lt;' | '&gt;' | '&lt;=' | '&gt;='
+
+term_expr:		factor_expr (termop factor_expr)*
+termop: '+' | '-'
+
+factor_expr:	unary_expr (factorop unary_expr)*
+factorop: '*' | '/'
+
+unary_expr:		unaryop* paren_expr
+unaryop: '!' | '-'
+
+paren_expr:		'(' expr ')'
+	|			Identifier
+	|			literal
+literal: IntLiteral | StringLiteral | "true" | "false"
+</pre>
+<h2>Error handling strategies</h2>
+		<h3>Generic</h3>
+		Error handling is done with C# exceptions.
+		If some error is encountered during either parsing or semantic analysis, and the current method doesn't know how to handle it, a CompileException is thrown.
+		Then the callers of that method can catch the exception, save it to a list of errors, and keep going.
+		
+		CompileException contains a diagnostic message, location of the error, and possibly an another location and message.
+		For example, if an already declared variable is redeclared, the CompileException will point to both the erroneous declaration and the original declaration.
+		<h3>Parse error recovery</h3>
+			The following cases are handled:
+			<ul>
+				<li>An unrecognized or a non-ASCII character was found: cause a diagnostic, let the parser-level error recovery rules handle the case.</li>
+				<li>A statement was parsed succesfully, but a statement starting keyword found instead of a semicolon: Show a diagnostic and pretend the semicolon was there.</li>
+				<li>A statement was parsed succesfully, but the next token is not a semicolon or a statement starting keyword: Assume that there was an error in the middle of the statement/expression,
+					and that an incomplete statement was parsed instead. Throw away the current statement, and skip until next semicolon or statement starting keyword.
+				<li>Error while parsing a statement or expression: skip until next semicolon or statement starting keyword.</li>
+				<li>Special checks to avoid 'unexpected end for' when the for-loop range expressions contain errors.</li>
+			</ul>
+
+<h2>Program code documentation</h2>
+	The MiniLang solution contains the following Visual Studio projects:
+	<dl>
+	<dt>DfaGenerator</dt>
+		<dd>The lexer is implemented with a table-driven DFA automaton.
+		The DfaGenerator project defines the token language with C# and generates the DFA tables for the actual lexer.</dd>
+	<dt>Tests</dt>
+		<dd>This project contains the unit tests for the interpreter.</dd>
+	<dt>MiniLang</dt>
+		<dd>This project contains the core of the interpreter.</dd>
+	</dl>
+		<h3>MiniLang core classes</h3>
+		<img src="ClassDiagram1.png" alt="Class diagram"/>
+		<dl>
+			<dt>TypeName</dt><dd>An enum representing the types in MiniPL: Int, String and Bool</dd>
+			<dt>Value</dt><dd>A wrapper class that holds an MiniPL object (an int, string or a boolean)</dd>
+			<dt>Program</dt><dd>Contains the Main method, which handles the command line arguments, reads in the source files, runs the necessary phases, and displays any errors.</dd>
+			<dt>CompileException</dt><dd>An exception class that represents an error either during compilation or interpretation.</dd>
+			<dt>CompilerContext</dt><dd>Contains the symbol table and a list of handled errors encountered during compilation.</dd>
+		</dl>
+		<h3>Lexer classes</h3>
+		<dl>
+			<dt>TokenType</dt><dd>An enum containing all the token types, for example Plus for the operator '+', IntLiteral for an integer literal, etc...</dd>
+			<dt>Location</dt><dd>Contains a location of a token in source code: the line and column number.</dd>
+			<dt>Token</dt><dd>Represents one token returned by the lexer. A token contains its type, location, and the content as a string.</dd>
+			<dt>Lexer</dt><dd>Tokenizes the program source into tokens, using the DFA tables generated by the DfaGenerator</dd>
+		</dl>
+		<h3>Parser classes</h3>
+			<dl>
+				<dt>Tree</dt><dd>An abstract base class for AST nodes. Concrete subclasses of Tree should have an implementation of ToString(), which is used for visualizing the AST and in Parser's unit tests</dd>
+				<dt>StmtTree and ExprTree</dt><dd>abstract superclasses for AST nodes representing statements and expressions.</li>
+				<dt>ITreeVisitor</dt><dd>An interface that allows the AST to be traversed with visitor pattern.</dd>
+				<dt>Parser</dt><dd>Parses the token stream generated by Lexer using a recursive-descent algorithm, and builds an AST. </dd>
+			</dl>
+		<h3>Semantic checker classes</h3>
+			<dl>
+				<dt>Checker</dt><dd>implements the ITreeVisitor interface, performs semantic checking by walking AST and collecting the resulting errors to a CompilerContext.</dd>
+				<dt>SymbolEntry</dt><dd>A symbol table entry. For every declared variable, an SymbolEntry is created and added to the symbol table. Holds the type of the variable, location of the declaration, and whether the symbol is currently a for-loop iterator variable.</dd>
+			
+			</dl>
+		<h3>Interpreter classes</h3>
+			<dl>
+				<dt>Interpreter</dt><dd>implements ITreeVisitor, interprets the program by walking the tree</dd>
+			</dl>
+		<h3>Tree classes</h3>
+		<img src="TreeClassDiagram.png"/>
+</body></html>

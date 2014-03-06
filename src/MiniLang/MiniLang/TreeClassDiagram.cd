@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MiniLang.Frontend.ExprTree">
+    <Position X="4" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Frontend\Trees\ExprTrees\ExprTree.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MiniLang.Frontend.Tree" Collapsed="true">
+    <Position X="11.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Frontend\Tree.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MiniLang.Frontend.Trees.VariableTree">
+    <Position X="7.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAgAAAAAAEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Frontend\Trees\ExprTrees\SimpleExprTrees.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MiniLang.Frontend.Trees.LiteralTree">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Frontend\Trees\ExprTrees\SimpleExprTrees.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MiniLang.Frontend.Trees.BinopTree">
+    <Position X="2.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAQAAQAAIAA=</HashCode>
+      <FileName>Frontend\Trees\ExprTrees\OperatorTrees.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MiniLang.Frontend.Trees.UnopTree">
+    <Position X="5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAEAIAA=</HashCode>
+      <FileName>Frontend\Trees\ExprTrees\OperatorTrees.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MiniLang.Frontend.Trees.AssignStmtTree">
+    <Position X="20.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAEAAAAAAAAAAAAAAAACAQAAAAAAAA=</HashCode>
+      <FileName>Frontend\Trees\StmtTrees\AssignStmtTree.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MiniLang.Frontend.Trees.DeclStmtTree">
+    <Position X="9.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAACAAAAEAAAAAAAAAAAAAAAAAQAAAAAABAA=</HashCode>
+      <FileName>Frontend\Trees\StmtTrees\DeclStmtTree.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MiniLang.Frontend.Trees.ForStmtTree">
+    <Position X="14" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAABAAAAAEEAABAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Frontend\Trees\StmtTrees\ForStmtTree.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MiniLang.Frontend.Trees.PrintStmtTree">
+    <Position X="16.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAEAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Frontend\Trees\StmtTrees\SimpleStmtTrees.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MiniLang.Frontend.Trees.ReadStmtTree">
+    <Position X="23" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Frontend\Trees\StmtTrees\SimpleStmtTrees.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MiniLang.Frontend.Trees.AssertStmtTree">
+    <Position X="11.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAEAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Frontend\Trees\StmtTrees\SimpleStmtTrees.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MiniLang.Frontend.Trees.StmtTree">
+    <Position X="16.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Frontend\Trees\StmtTrees\StmtTree.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MiniLang.Frontend.Trees.StmtListTree">
+    <Position X="18.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAEAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Frontend\Trees\StmtTrees\StmtTree.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="MiniLang.Frontend.ITreeVisitor&lt;TExprRet&gt;">
+    <Position X="11.75" Y="2.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAAAACAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Frontend\ITreeVisitor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

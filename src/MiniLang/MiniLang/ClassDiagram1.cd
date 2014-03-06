@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MiniLang.Frontend.Parser">
+    <Position X="6.5" Y="3.75" Width="1.5" />
+    <Members>
+      <Method Name="expectTokens" Hidden="true" />
+      <Field Name="FOR_SYNCH_SET" Hidden="true" />
+      <Method Name="matchTokens" Hidden="true" />
+      <Method Name="parseCmp" Hidden="true" />
+      <Method Name="ParseExpr" Hidden="true" />
+      <Method Name="parseFactor" Hidden="true" />
+      <Method Name="parseIdent" Hidden="true" />
+      <Method Name="parseLogical" Hidden="true" />
+      <Method Name="parseParenExpr" Hidden="true" />
+      <Method Name="Parser" Hidden="true" />
+      <Method Name="parseStatements" Hidden="true" />
+      <Method Name="parseStmt" Hidden="true" />
+      <Method Name="parseTerm" Hidden="true" />
+      <Method Name="parseTypeName" Hidden="true" />
+      <Method Name="parseUnary" Hidden="true" />
+      <Method Name="predict" Hidden="true" />
+      <Field Name="STMT_KW_PREDICT" Hidden="true" />
+      <Field Name="STMT_PREDICT" Hidden="true" />
+      <Field Name="STMT_SYNCH_SET" Hidden="true" />
+      <Method Name="synchronize" Hidden="true" />
+      <Method Name="valueFromToken" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AUAIAAAASkEAAAAAACADBBAEAgAggAAAQgAMCAIAAAA=</HashCode>
+      <FileName>Frontend\Parser\ExpressionParser.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="lexer" />
+      <Property Name="Context" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MiniLang.Frontend.Lexer">
+    <Position X="9" Y="1" Width="1.5" />
+    <Members>
+      <Field Name="CommentParserDfaTable" Hidden="true" />
+      <Field Name="currentToken" Hidden="true" />
+      <Method Name="dfaParseToken" Hidden="true" />
+      <Field Name="fileContent" Hidden="true" />
+      <Field Name="fileOffset" Hidden="true" />
+      <Field Name="keywords" Hidden="true" />
+      <Method Name="Lexer" Hidden="true" />
+      <Field Name="MainParserDfaTable" Hidden="true" />
+      <Method Name="skipComments" Hidden="true" />
+      <Method Name="updateCurrentToken" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAKAgAAAAAAAAAAAEBQCAAoAAAAAEAAAAgAAAABAAAA=</HashCode>
+      <FileName>Frontend\Lexer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CurrentLocation" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MiniLang.Frontend.Location" BaseTypeListCollapsed="true">
+    <Position X="7.75" Y="10" Width="1.5" />
+    <Members>
+      <Method Name="Clone" Hidden="true" />
+      <Method Name="GetHashCode" Hidden="true" />
+      <Method Name="operator !=" Hidden="true" />
+      <Method Name="operator ==" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEgABAAABAAAAAAIAAAAAAAAABhjA=</HashCode>
+      <FileName>Frontend\Location.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MiniLang.Interpreter.Interpreter" BaseTypeListCollapsed="true">
+    <Position X="2" Y="0.75" Width="1.5" />
+    <Members>
+      <Method Name="Interpreter" Hidden="true" />
+      <Method Name="ITreeVisitor&lt;Value&gt;.visitExpr" Hidden="true" />
+      <Method Name="ITreeVisitor&lt;Value&gt;.visitStmt" Hidden="true" />
+      <Method Name="visitStmtList" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAQQAAAAAAAAAAgAAAkAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Interpreter.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Program" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MiniLang.SemanticCheck.Checker" BaseTypeListCollapsed="true">
+    <Position X="2" Y="7.75" Width="1.5" />
+    <Members>
+      <Method Name="checkAssign" Hidden="true" />
+      <Method Name="Checker" Hidden="true" />
+      <Method Name="checkExprHasType" Hidden="true" />
+      <Method Name="checkExprsHaveTypes" Hidden="true" />
+      <Method Name="checkSameTypes" Hidden="true" />
+      <Method Name="getSymbol" Hidden="true" />
+      <Method Name="performBothErrorSafely" Hidden="true" />
+      <Method Name="visitExpr" Hidden="true" />
+      <Method Name="visitStmt" Hidden="true" />
+      <Method Name="visitStmtList" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAwAgAAgAAAAAAAACAAEACAAAAAEAAAABAAEABAAE=</HashCode>
+      <FileName>SemanticCheck\Checker.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="program" />
+      <Property Name="Context" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MiniLang.CompileException" BaseTypeListCollapsed="true">
+    <Position X="8" Y="6.5" Width="1.5" />
+    <Members>
+      <Method Name="CompileException" Hidden="true" />
+    </Members>
+    <AssociationLine Name="ContextLocation" Type="MiniLang.Frontend.Location">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.048" Y="0.415" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIARAAAIAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>CompileException.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Location" />
+      <Property Name="ContextLocation" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MiniLang.CompilerContext">
+    <Position X="5" Y="6.5" Width="1.5" />
+    <Members>
+      <Method Name="CompilerContext" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAACACAAAAAAAAgAAA=</HashCode>
+      <FileName>CompilerContext.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="SymbolTable" />
+      <Property Name="Errors" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="MiniLang.Program">
+    <Position X="3.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAQAAAhAAAAAAAAAgAAAAAABAAAAAQAAABAIAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Checker" />
+      <Field Name="Context" />
+      <Field Name="Interpreter" />
+      <Field Name="Lexer" />
+      <Field Name="Parser" />
+      <Field Name="Program" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MiniLang.SymbolEntry">
+    <Position X="5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAQAgAAAAAAA=</HashCode>
+      <FileName>SymbolEntry.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Location" />
+      <Property Name="Value" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MiniLang.Value" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="9.25" Width="1.5" />
+    <Members>
+      <Field Name="rawValue" Hidden="true" />
+      <Method Name="Value" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQEEBAAAAAAAAAAAAAgAQAAAAAQAAA=</HashCode>
+      <FileName>Value.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Type" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MiniLang.Frontend.Trees.StmtListTree">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <Members>
+      <Method Name="StmtListTree" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAEAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Frontend\Trees\StmtTrees\StmtTree.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="MiniLang.TypeName">
+    <Position X="2" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>TypeName.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

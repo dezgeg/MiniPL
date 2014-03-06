@@ -1,0 +1,4 @@
+Unexpected token 'Print' near 'print', expecting one of Semicolon at line 4, columns 0-4
+Undeclared variable 'bar' at line 4, columns 6-8
+
+2 errors in total.

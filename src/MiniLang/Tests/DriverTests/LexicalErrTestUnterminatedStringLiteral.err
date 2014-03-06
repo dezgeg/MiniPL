@@ -1,0 +1,5 @@
+Unexpected token 'UnterminatedStringLiteral' near '"make sure that this does not throw the lexer off the tracks and gives a sensible message ', expecting one of LeftParen, Identifier, IntLiteral, False, True, StringLiteral at line 1, columns 6-96
+Undeclared variable 'bar' at line 1, columns 103-105
+Undeclared variable 'baz' at line 2, columns 6-8
+
+3 errors in total.

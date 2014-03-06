@@ -1,0 +1,4 @@
+Unexpected token 'Identifier' near 'asdasd', expecting one of DotDot at line 3, columns 14-19
+Undeclared variable 'bar' at line 5, columns 7-9
+
+2 errors in total.
